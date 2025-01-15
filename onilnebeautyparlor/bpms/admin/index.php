@@ -3,121 +3,155 @@ session_start();
 error_reporting(0);
 include('includes/dbconnection.php');
 
-if(isset($_POST['login']))
-  {
-    $adminuser=$_POST['username'];
-    $password=md5($_POST['password']);
-    $query=mysqli_query($con,"select ID from tbladmin where  UserName='$adminuser' && Password='$password' ");
-    $ret=mysqli_fetch_array($query);
-    if($ret>0){
-      $_SESSION['bpmsaid']=$ret['ID'];
-     header('location:dashboard.php');
+if (isset($_POST['login'])) {
+    $adminuser = $_POST['username'];
+    $password = md5($_POST['password']);
+    $query = mysqli_query($con, "SELECT ID FROM tbladmin WHERE UserName='$adminuser' && Password='$password'");
+    $ret = mysqli_fetch_array($query);
+    if ($ret > 0) {
+        $_SESSION['bpmsaid'] = $ret['ID'];
+        header('location:dashboard.php');
+    } else {
+        $msg = "Invalid Details.";
     }
-    else{
-    $msg="Invalid Details.";
-    }
-  }
-  ?>
+}
+?>
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>BPMS | Login Page </title>
+    <title>Salon Management System | Login Page</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
+    <!-- Custom CSS -->
+    <link href="css/style.css" rel='stylesheet' type='text/css' />
+    <!-- Font Awesome -->
+    <link href="css/font-awesome.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href='//fonts.googleapis.com/css?family=Roboto+Condensed:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
+    <!-- Animate.css -->
+    <link href="css/animate.css" rel="stylesheet" type="text/css" media="all">
+    <!-- Metis Menu -->
+    <script src="js/metisMenu.min.js"></script>
+    <link href="css/custom.css" rel="stylesheet">
+    <style>
+        /* Salon-Themed Design Updates */
+        body {
+            background: linear-gradient(120deg, #f4e7d3, #d8c1a8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Roboto Condensed', sans-serif;
+        }
+        .login-page {
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            background-image: url('images/salon-background.jpg'); /* Add a salon-themed background image */
+            background-size: cover;
+            background-position: center;
+        }
+        .login-page h3 {
+            color: #6b4f4f;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        .login-page h4 {
+            color: #6b4f4f;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+        .login-page input[type="text"],
+        .login-page input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #d8c1a8;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+            background: rgba(255, 255, 255, 0.8);
+        }
+        .login-page input[type="text"]:focus,
+        .login-page input[type="password"]:focus {
+            border-color: #6b4f4f;
+        }
+        .login-page input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background: #6b4f4f;
+            border: none;
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .login-page input[type="submit"]:hover {
+            background: #5a3f3f;
+        }
+        .login-page .forgot-grid {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .login-page .forgot-grid a {
+            color: #6b4f4f;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        .login-page .forgot-grid a:hover {
+            color: #5a3f3f;
+        }
+        .login-page .error-message {
+            color: #ff0000;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-page">
+        <h3>Sign In</h3>
+        <h4>Welcome to the Salon Management System</h4>
+        <form role="form" method="post" action="">
+            <?php if ($msg) { ?>
+                <p class="error-message"><?php echo $msg; ?></p>
+            <?php } ?>
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <input type="submit" name="login" value="Sign In">
+            <div class="forgot-grid">
+                <div class="forgot">
+                    <a href="../index.php">Back to Home</a>
+                </div>
+                <div class="forgot">
+                    <a href="forgot-password.php">Forgot Password?</a>
+                </div>
+            </div>
+        </form>
+    </div>
 
-<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-<!-- Bootstrap Core CSS -->
-<link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
-<!-- Custom CSS -->
-<link href="css/style.css" rel='stylesheet' type='text/css' />
-<!-- font CSS -->
-<!-- font-awesome icons -->
-<link href="css/font-awesome.css" rel="stylesheet"> 
-<!-- //font-awesome icons -->
- <!-- js-->
-<script src="js/jquery-1.11.1.min.js"></script>
-<script src="js/modernizr.custom.js"></script>
-<!--webfonts-->
-<link href='//fonts.googleapis.com/css?family=Roboto+Condensed:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
-<!--//webfonts--> 
-<!--animate-->
-<link href="css/animate.css" rel="stylesheet" type="text/css" media="all">
-<script src="js/wow.min.js"></script>
-	<script>
-		 new WOW().init();
-	</script>
-<!--//end-animate-->
-<!-- Metis Menu -->
-<script src="js/metisMenu.min.js"></script>
-<script src="js/custom.js"></script>
-<link href="css/custom.css" rel="stylesheet">
-<!--//Metis Menu -->
-</head> 
-<body class="cbp-spmenu-push">
-	<div class="main-content">
-		
-		<!-- main content start-->
-		<div id="page-wrapper">
-			<div class="main-page login-page ">
-				<h3 class="title1">SignIn Page</h3>
-				<div class="widget-shadow">
-					<div class="login-top">
-						<h4>Welcome back to BPMS AdminPanel ! </h4>
-					</div>
-					<div class="login-body">
-						<form role="form" method="post" action="">
-							<p style="font-size:16px; color:red" align="center"> <?php if($msg){
-    echo $msg;
-  }  ?> </p>
-							<input type="text" class="user" name="username" placeholder="Username" required="true">
-							<input type="password" name="password" class="lock" placeholder="Password" required="true">
-							<input type="submit" name="login" value="Sign In">
-							<div class="forgot-grid">
-								
-								<div class="forgot">
-									<a href="../index.php">Back to Home</a>
-								</div>
-								<div class="clearfix"> </div>
-							</div>
-							<div class="forgot-grid">
-								
-								<div class="forgot">
-									<a href="forgot-password.php">forgot password?</a>
-								</div>
-								<div class="clearfix"> </div>
-							</div>
-						</form>
-					</div>
-				</div>
-				
-				
-			</div>
-		</div>
-		
-	</div>
-	<!-- Classie -->
-		<script src="js/classie.js"></script>
-		<script>
-			var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
-				showLeftPush = document.getElementById( 'showLeftPush' ),
-				body = document.body;
-				
-			showLeftPush.onclick = function() {
-				classie.toggle( this, 'active' );
-				classie.toggle( body, 'cbp-spmenu-push-toright' );
-				classie.toggle( menuLeft, 'cbp-spmenu-open' );
-				disableOther( 'showLeftPush' );
-			};
-			
-			function disableOther( button ) {
-				if( button !== 'showLeftPush' ) {
-					classie.toggle( showLeftPush, 'disabled' );
-				}
-			}
-		</script>
-	<!--scrolling js-->
-	<script src="js/jquery.nicescroll.js"></script>
-	<script src="js/scripts.js"></script>
-	<!--//scrolling js-->
-	<!-- Bootstrap Core JavaScript -->
-   <script src="js/bootstrap.js"> </script>
+    <!-- Scripts -->
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/modernizr.custom.js"></script>
+    <script src="js/wow.min.js"></script>
+    <script>
+        new WOW().init();
+    </script>
+    <script src="js/classie.js"></script>
+    <script src="js/jquery.nicescroll.js"></script>
+    <script src="js/scripts.js"></script>
+    <script src="js/bootstrap.js"></script>
 </body>
 </html>

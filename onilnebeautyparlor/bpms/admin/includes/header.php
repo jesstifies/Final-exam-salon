@@ -5,8 +5,8 @@
         <!--toggle button end-->
         <!--logo -->
         <div class="logo">
-          <a href="index.html">
-            <h1>BPMS</h1>
+          <a href="dashboard.php">
+            <h1> Millen Hair Salon</h1>
             <span>AdminPanel</span>
           </a>
         </div>
@@ -73,7 +73,7 @@ $name=$row['AdminName'];
             <li class="dropdown profile_details_drop">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                 <div class="profile_img"> 
-                  <span class="prfil-img"><img src="images/download (1).png" alt="" width="50" height="60"> </span> 
+                  <span class="prfil-img"><img src="images/3.png" alt="" width="50" height="60"> </span> 
                   <div class="user-name">
                     <p><?php echo $name; ?></p>
                     <span>Administrator</span>

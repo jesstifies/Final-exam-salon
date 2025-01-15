@@ -135,10 +135,9 @@ $totalser=mysqli_num_rows($query5);
 						<div class="clearfix"> </div>	
 					</div>
 					<div class="col-md-4 widget states-last">
-					
-
-					
 						<?php
+//todays sale
+ 
 //Total Sale
  $query9=mysqli_query($con,"select tblinvoice.ServiceId as ServiceId, tblservices.Cost
  from tblinvoice 
