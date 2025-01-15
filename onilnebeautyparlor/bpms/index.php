@@ -1,25 +1,26 @@
 <?php 
-include('includes/dbconnection.php');
+include('includes/dbconnection.php'); // connection
 session_start();
 error_reporting(0);
 include('includes/dbconnection.php');
-if(isset($_POST['submit']))
+if(isset($_POST['submit'])) // form field values
   {
-
+    
     $name=$_POST['name'];
     $email=$_POST['email'];
     $services=$_POST['services'];
+	 $branch=$_POST['branch']; // Newly added branch
     $adate=$_POST['adate'];
     $atime=$_POST['atime'];
     $phone=$_POST['phone'];
-    $aptnumber = mt_rand(100000000, 999999999);
+    $aptnumber = mt_rand(100000000, 999999999);  // Generates a random 9-digit appointment number.
   
-    $query=mysqli_query($con,"insert into tblappointment(AptNumber,Name,Email,PhoneNumber,AptDate,AptTime,Services) value('$aptnumber','$name','$email','$phone','$adate','$atime','$services')");
+    $query=mysqli_query($con,"insert into tblappointment(AptNumber,Name,Email,PhoneNumber,AptDate,AptTime,Services,Branch) value('$aptnumber','$name','$email','$phone','$adate','$atime','$services','$branch')");
     if ($query) {
 $ret=mysqli_query($con,"select AptNumber from tblappointment where Email='$email' and  PhoneNumber='$phone'");
 $result=mysqli_fetch_array($ret);
 $_SESSION['aptno']=$result['AptNumber'];
- echo "<script>window.location.href='thank-you.php'</script>";	
+ echo "<script>window.location.href='thank-you.php'</script>";	// Redirects the user to a "thank-you.php
   }
   else
     {
@@ -33,11 +34,11 @@ $_SESSION['aptno']=$result['AptNumber'];
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>BPMS||Home Page</title>
+    <title>Millen Hair Salon ||Home Page</title>
         
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700,700i,900,900i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet" rel="stylesheet">
 
     <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
     <link rel="stylesheet" href="css/animate.css">
@@ -62,18 +63,19 @@ $_SESSION['aptno']=$result['AptNumber'];
 	  <?php include_once('includes/header.php');?>
     <!-- END nav -->
 
-    <section id="home-section" class="hero" style="background-image: url(images/bg.jpg);" data-stellar-background-ratio="0.5">
+    <section id="home-section" class="hero" style="background-image: url(images/redbg.jpg);" data-stellar-background-ratio="0.5">
 		  <div class="home-slider owl-carousel">
 	      <div class="slider-item js-fullheight">
 	      	<div class="overlay"></div>
 	        <div class="container-fluid p-0">
 	          <div class="row d-md-flex no-gutters slider-text align-items-end justify-content-end" data-scrollax-parent="true">
-	          	<img class="one-third align-self-end order-md-last img-fluid" src="images/bg_1.png" alt="">
+	          	<img class="one-third align-self-end order-md-last img-fluid" src="images/har2.png" alt="">
 		          <div class="one-forth d-flex align-items-center ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
 		          	<div class="text mt-5">
 		          		<span class="subheading">Beauty Parlour</span>
-			            <h1 class="mb-4">Get Pretty Look</h1>
-			            <p class="mb-4">We pride ourselves on our high quality work and attention to detail. The products we use are of top quality branded products.</p>
+			            <h1 class="mb-4">Good hair days start here.</h1>
+			            <p class="mb-4">Ready to ditch the bad hair days and embrace your hair goals?   We're experts in all things hair, from classic cuts and vibrant colors to the trendiest styles.  
+							Whether you're craving a complete makeover or just need a bit of TLC, we'll create a look that's perfect for you.  ✨</p>
 			            
 			           
 		            </div>
@@ -86,11 +88,11 @@ $_SESSION['aptno']=$result['AptNumber'];
 	      	<div class="overlay"></div>
 	        <div class="container-fluid p-0">
 	          <div class="row d-flex no-gutters slider-text align-items-center justify-content-end" data-scrollax-parent="true">
-	          	<img class="one-third align-self-end order-md-last img-fluid" src="images/bg_2.png" alt="">
+	          	<img class="one-third align-self-end order-md-last img-fluid" src="images/hair.png" alt="">
 		          <div class="one-forth d-flex align-items-center ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
 		          	<div class="text mt-5">
 		          		<span class="subheading">Natural Beauty</span>
-			            <h1 class="mb-4">Beauty Salon</h1>
+			            <h1 class="mb-4">Get the look you deserve.</h1>
 			            <p class="mb-4">This parlour provides huge facilities with advanced technology equipments and best quality service. Here we offer best treatment that you might have never experienced before.</p>
 			            
 			           
@@ -141,6 +143,24 @@ $_SESSION['aptno']=$result['AptNumber'];
 		                    </div>
 					            </div>
 			              </div>
+
+						  <div class="col-sm-12">
+  							<div class="form-group">
+    						<div class="select-wrap">
+      						<div class="icon"><span class="ion-ios-arrow-down"></span></div>
+      						<select name="branch" id="branch" required="true" class="form-control">
+        					<option value="">Select Branch</option>
+							<?php $query=mysqli_query($con,"select * from tblbranch");
+              while($row=mysqli_fetch_array($query))
+              {
+              ?>
+		                       <option value="<?php echo $row['Branch'];?>"><?php echo $row['Branch'];?></option>
+		                       <?php } ?> 
+      							</select>
+    						</div>
+  							</div>
+							</div>	  
+						  
 			              <div class="col-sm-12">
 			                <div class="form-group">
 			                  <input type="text" class="form-control appointment_date" placeholder="Date" name="adate" id='adate' required="true">
@@ -165,7 +185,7 @@ $_SESSION['aptno']=$result['AptNumber'];
 						</div>
     			</div>
 					<div class="one-third">
-						<div class="img" style="background-image: url(images/bg-1.jpg);">
+						<div class="img" style="background-image: url(images/salon.jpg);">
 						</div>
 					</div>
     		</div>
