@@ -19,7 +19,7 @@ if (isset($_POST['login'])) {
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Salon Management System | Login Page</title>
+    <title> Millen Hair Salon | Login Page</title>
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
     <!-- Custom CSS -->

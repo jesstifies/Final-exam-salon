@@ -56,9 +56,6 @@ if(isset($_POST['submit'])) // form field values
             --soft-beige: #F4E7D3;
             --dark-brown: #6B4F4F;
         }
-		:root {
-            
-        }
 
         /* Override Bootstrap Button Styles */
         .btn-primary {
@@ -119,7 +116,7 @@ if(isset($_POST['submit'])) // form field values
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
         .appointment-wrap h3 {
-            color: var(--dark-brown);
+            color: #223656;
             font-family: 'Playfair Display', serif;
             font-size: 2rem;
             margin-bottom: 20px;
